@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coût du Risque Bancaire 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --dark: #0d1b2a;
+            --blue: #1b4f72;
+            --accent-blue: #2980b9;
+            --orange: #e67e22;
+            --red: #c0392b;
+            --green: #27ae60;
+            --purple: #8e44ad;
+            --gold: #f1c40f;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-600: #6c757d;
+            --gray-800: #343a40;
+        }
+        
+        body { font-family: Arial, sans-serif; background: #eee; color: #333; line-height: 1.5; }
+        
+        .slide {
+            width: 1280px;
+            height: 720px;
+            margin: 30px auto;
+            background: white;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+            padding: 40px 50px;
+        }
+        
+        @media print {
+            body { background: white; }
+            .slide { margin: 0; page-break-after: always; }
+            .no-print { display: none; }
+        }
+        
+        .header {
+            border-bottom: 4px solid var(--blue);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .header .logo { font-size: 12px; font-weight: bold; color: var(--blue); text-transform: uppercase; letter-spacing: 2px; }
+        .header h1 { font-size: 24px; font-weight: bold; color: var(--dark); margin-top: 5px; }
+        
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            left: 50px;
+            right: 50px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--gray-600);
+            border-top: 1px solid var(--gray-200);
+            padding-top: 10px;
+        }
+        
+        .cover {
+            background: linear-gradient(135deg, var(--dark) 0%, #1b3a5c 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px;
+        }
+        
+        .cover .logo-text { font-size: 16px; font-weight: bold; letter-spacing: 4px; color: var(--gold); margin-bottom: 40px; }
+        .cover h1 { font-size: 40px; font-weight: bold; margin-bottom: 20px; }
+        .cover .subtitle { font-size: 18px; font-weight: 300; color: rgba(255,255,255,0.85); margin-bottom: 40px; }
+        .cover .bar { width: 100px; height: 5px; background: var(--orange); margin: 0 auto 30px; }
+        .cover .meta { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 30px; }
+        
+        .big-number { font-size: 48px; font-weight: bold; color: var(--blue); line-height: 1; }
+        .big-number.orange { color: var(--orange); }
+        .big-number.green { color: var(--green); }
+        .big-number.red { color: var(--red); }
+        .big-number.purple { color: var(--purple); }
+        
+        .grid { display: grid; gap: 25px; }
+        .grid-2 { grid-template-columns: 1fr 1fr; }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+        
+        .card {
+            background: var(--gray-100);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .card.blue { background: #e8f4fd; }
+        .card.dark { background: var(--dark); color: white; }
+        .card.alert { background: #fdedec; border-left: 4px solid var(--red); }
+        .card.success { background: #e8f8f5; border-left: 4px solid var(--green); }
+        .card.warning { background: #fef9e7; border-left: 4px solid var(--orange); }
+        
+        .card h3 { font-size: 14px; font-weight: bold; margin-bottom: 8px; }
+        .card p { font-size: 11px; color: var(--gray-600); }
+        .card.dark p { color: rgba(255,255,255,0.8); }
+        
+        .stat-box { text-align: center; padding: 15px; background: var(--gray-100); border-radius: 10px; }
+        .stat-box .value { font-size: 24px; font-weight: bold; color: var(--blue); }
+        .stat-box .label { font-size: 10px; color: var(--gray-600); margin-top: 5px; }
+        
+        .tag { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 9px; font-weight: bold; }
+        .tag.blue { background: #d4e9f7; color: var(--blue); }
+        .tag.green { background: #d1f2eb; color: #1e8449; }
+        .tag.orange { background: #fdebd0; color: #b9770e; }
+        .tag.red { background: #fadbd8; color: #b03a2e; }
+        .tag.purple { background: #e8daef; color: #6c3483; }
+        
+        .alert-box { background: linear-gradient(135deg, #c0392b, #e74c3c); color: white; padding: 15px; border-radius: 10px; margin: 15px 0; }
+        .alert-box h3 { font-size: 14px; margin-bottom: 8px; }
+        
+        .info-box { background: linear-gradient(135deg, var(--dark), #1b3a5c); color: white; padding: 15px; border-radius: 10px; margin: 15px 0; }
+        .info-box h3 { font-size: 14px; margin-bottom: 8px; }
+        .info-box.warning { background: linear-gradient(135deg, #d35400, #e67e22); }
+        .info-box.success { background: linear-gradient(135deg, #1e8449, #27ae60); }
+        
+        .section-num { font-size: 100px; font-weight: bold; color: var(--blue); opacity: 0.1; position: absolute; right: 50px; top: 30px; }
+        .section-title { font-size: 32px; font-weight: bold; color: var(--dark); }
+        
+        .list { list-style: none; }
+        .list li { padding: 8px 0; border-bottom: 1px solid var(--gray-200); font-size: 12px; }
+        .list li:last-child { border-bottom: none; }
+        
+        .progress { height: 8px; background: var(--gray-200); border-radius: 4px; overflow: hidden; margin: 6px 0; }
+        .progress-bar { height: 100%; border-radius: 4px; }
+        .progress-bar.blue { background: var(--accent-blue); }
+        .progress-bar.green { background: var(--green); }
+        .progress-bar.orange { background: var(--orange); }
+        .progress-bar.red { background: var(--red); }
+        
+        .table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        .table th { background: var(--dark); color: white; padding: 10px 12px; text-align: left; font-weight: 600; }
+        .table td { padding: 10px 12px; border-bottom: 1px solid var(--gray-200); }
+        .table tr:nth-child(even) { background: var(--gray-100); }
+        
+        .print-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: var(--blue);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(41,128,185,0.3);
+        }
+        
+        .print-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(41,128,185,0.4); }
+        
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .mt-10 { margin-top: 10px; }
+        .mt-15 { margin-top: 15px; }
+        .mb-10 { margin-bottom: 10px; }
+        .mb-15 { margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+<!-- SLIDE 1: COUVERTURE -->
+<div class="slide cover">
+    <div class="logo-text">Strategic Advisory - Avril 2026</div>
+    <div class="bar"></div>
+    <h1>Lutte contre le Coût du Risque Bancaire</h1>
+    <p class="subtitle">Stratégies, Solutions et Cadre Juridique<br>dans un Contexte Géopolitique 2025-2026</p>
+    <p style="color: var(--gold); font-size: 14px; margin-top: 10px;">Impact Géopolitique et Finances des Français</p>
+    <p class="meta">Données actualisées Avril 2026 | Sources : BCE, Banque de France, INSEE</p>
+</div>
+
+<!-- SLIDE 2: CONTEXTE GEOPOLITIQUE -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">Strategic Advisory</div>
+        <h1>Contexte Géopolitique Avril 2026</h1>
+    </div>
+    
+    <div class="grid grid-2" style="flex: 1;">
+        <div>
+            <div style="background: var(--red); color: white; padding: 6px 12px; border-radius: 4px; display: inline-block; font-size: 10px; font-weight: bold; margin-bottom: 15px;">ALERTE GÉOPOLITIQUE</div>
+            
+            <div class="card alert" style="margin-bottom: 12px;">
+                <h3 style="color: var(--red);">Guerre Iran - Moyen-Orient</h3>
+                <p>Conflit USA-Israël vs Iran (28 février 2026)<br>Frappes sur l'Iran - Mort du guide Khamenei</p>
+            </div>
+            
+            <div style="padding: 8px 12px; background: var(--gray-100); border-radius: 6px; margin: 6px 0; font-size: 11px; display: flex; align-items: center; gap: 8px;">
+                <div style="width: 10px; height: 10px; background: var(--red); border-radius: 50%;"></div>
+                <span><strong>Détroit d'Ormuz menacé</strong> - 20% pétrole mondial</span>
+            </div>
+            <div style="padding: 8px 12px; background: var(--gray-100); border-radius: 6px; margin: 6px 0; font-size: 11px; display: flex; align-items: center; gap: 8px;">
+                <div style="width: 10px; height: 10px; background: var(--red); border-radius: 50%;"></div>
+                <span><strong>Prix du pétrole</strong> - +30% depuis février 2026</span>
+            </div>
+            <div style="padding: 8px 12px; background: var(--gray-100); border-radius: 6px; margin: 6px 0; font-size: 11px; display: flex; align-items: center; gap: 8px;">
+                <div style="width: 10px; height: 10px; background: var(--orange); border-radius: 50%;"></div>
+                <span><strong>Gaz européen</strong> - +40% anticipé (scénario long)</span>
+            </div>
+            
+            <div class="info-box warning" style="margin-top: 15px;">
+                <p style="font-size: 11px;"><strong>Impact France :</strong> Bouclier nucléaire protège l'électricité. Vulnérabilité aux prix du pétrole pour transports et chauffage.</p>
+            </div>
+        </div>
+        
+        <div>
+            <h3 style="margin-bottom: 12px; color: var(--purple);">Projections Économiques France 2026</h3>
+            
+            <div class="grid grid-2" style="gap: 12px; margin-bottom: 15px;">
+                <div class="stat-box">
+                    <div class="value" style="color: var(--orange);">+1,5%</div>
+                    <div class="label">Inflation IPC 2026</div>
+                </div>
+                <div class="stat-box">
+                    <div class="value" style="color: var(--red);">-0,4%</div>
+                    <div class="label">Pouvoir d'achat 2026</div>
+                </div>
+                <div class="stat-box">
+                    <div class="value" style="color: var(--blue);">66,8$</div>
+                    <div class="label">Baril Brent prévu</div>
+                </div>
+                <div class="stat-box">
+                    <div class="value" style="color: var(--orange);">18,2%</div>
+                    <div class="label">Taux épargne France</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Suite Guerre Ukraine (depuis 2022)</h3>
+                <ul class="list" style="margin-top: 10px;">
+                    <li>Sanctions Russie - Flambée énergie</li>
+                    <li>Diversification GNL réalisée</li>
+                    <li>Fragilité chaîne approvisionnement</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <span>Sources : BCE, PwC Mars 2026, Les Echos Mars 2026</span>
+        <span>2</span>
+    </div>
+</div>
+
+<!-- SLIDE 3: ETAT DES LIEUX 2025 -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">Strategic Advisory</div>
+        <h1>État des Lieux - Coût du Risque 2025</h1>
+    </div>
+    
+    <div class="alert-box" style="margin-bottom: 20px;">
+        <h3>Chiffres Clés 2025 - Alerte Sectorielle</h3>
+        <p style="font-size: 12px;">Le coût du risque des banques françaises a atteint <strong>11,8 milliards d'euros</strong> en 2024, en hausse de +19,71% vs 2023.</p>
+    </div>
+    
+    <div class="grid grid-4 mb-15">
+        <div class="card blue text-center">
+            <div class="big-number orange" style="font-size: 32px;">11,8 Mds€</div>
+            <div class="label mt-10">Coût du risque 2024</div>
+            <span class="tag red mt-10">+19,7% vs 2023</span>
+        </div>
+        <div class="card blue text-center">
+            <div class="big-number red" style="font-size: 32px;">67 830</div>
+            <div class="label mt-10">Défaillances entreprises 2024</div>
+            <span class="tag red mt-10">Hausse significative</span>
+        </div>
+        <div class="card blue text-center">
+            <div class="big-number" style="font-size: 32px;">2,61%</div>
+            <div class="label mt-10">NPL T3 2024</div>
+            <span class="tag orange mt-10">Légère hausse</span>
+        </div>
+        <div class="card blue text-center">
+            <div class="big-number green" style="font-size: 32px;">16,1%</div>
+            <div class="label mt-10">Ratio CET1 moyen</div>
+            <span class="tag green mt-10">Solide</span>
+        </div>
+    </div>
+    
+    <div class="grid grid-2" style="flex: 1;">
+        <div>
+            <h3 style="margin-bottom: 12px;">Focus BNP Paribas 2025</h3>
+            <table class="table">
+                <thead>
+                    <tr><th>Indicateur</th><th>2025</th><th>2024</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Coût du risque</td><td style="color: var(--red);">3 350 M€</td><td>2 999 M€</td></tr>
+                    <tr><td>RWA (actifs pondérés)</td><td>567 Mds€</td><td>580 Mds€</td></tr>
+                    <tr><td>LCR</td><td style="color: var(--green);">134%</td><td>-</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h3 style="margin-bottom: 12px;">Secteurs les Plus Touchés</h3>
+            <div style="margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
+                    <span>BTP / Construction</span><span style="font-weight: bold;">6,2% défaillance</span>
+                </div>
+                <div class="progress"><div class="progress-bar red" style="width: 85%;"></div></div>
+            </div>
+            <div style="margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
+                    <span>Commerce détail</span><span style="font-weight: bold;">5,8% défaillance</span>
+                </div>
+                <div class="progress"><div class="progress-bar orange" style="width: 78%;"></div></div>
+            </div>
+            <div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
+                    <span>Industrie énergétique</span><span style="font-weight: bold;">4,5% défaillance</span>
+                </div>
+                <div class="progress"><div class="progress-bar orange" style="width: 65%;"></div></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <span>Sources : VNCA Consulting 2025, BNP Paribas 2025, Banque de France T3 2024</span>
+        <span>3</span>
+    </div>
+</div>
+
+<!-- SLIDE 4: FINANCES FRANCAIS -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">Strategic Advisory</div>
+        <h1>Impact sur les Finances des Français - 2026</h1>
+    </div>
+    
+    <div class="grid grid-2" style="flex: 1;">
+        <div>
+            <h3 style="margin-bottom: 12px; color: var(--blue);">Endettement et Crédit (OCM 2025)</h3>
+            
+            <div class="card alert mb-15">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h4 style="color: var(--red);">Indice détention prêts</h4>
+                        <p style="font-size: 10px;">Historique le plus bas jamais enregistré</p>
+                    </div>
+                    <div class="big-number red" style="font-size: 28px;">40,4%</div>
+                </div>
+                <span class="tag red mt-10">-21% vs moyenne pré-crise 2009</span>
+            </div>
+            
+            <table class="table mb-15">
+                <thead>
+                    <tr><th>Type de crédit</th><th>Ménages</th><th>Taux</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Crédit immobilier</td><td>6,91 millions</td><td style="color: var(--orange);">28,7%</td></tr>
+                    <tr><td>Crédit consommation</td><td>3,62 millions</td><td style="color: var(--red);">18,1%</td></tr>
+                </tbody>
+            </table>
+            
+            <div class="info-box warning" style="padding: 12px;">
+                <p style="font-size: 11px;"><strong>15%</strong> des ménages estiment leurs mensualités <strong>trop lourdes</strong></p>
+            </div>
+        </div>
+        
+        <div>
+            <h3 style="margin-bottom: 12px; color: var(--red);">Fragilité Financière - Janvier 2026</h3>
+            
+            <div class="grid grid-2" style="gap: 12px; margin-bottom: 15px;">
+                <div class="stat-box" style="background: #fdedec;">
+                    <div class="value" style="color: var(--red); font-size: 22px;">+10,2%</div>
+                    <div class="label">Dossiers surendettement</div>
+                </div>
+                <div class="stat-box" style="background: #fdedec;">
+                    <div class="value" style="color: var(--red); font-size: 22px;">+3,6%</div>
+                    <div class="label">Nouvelles entrées FICP</div>
+                </div>
+            </div>
+            
+            <div class="card alert" style="margin-bottom: 12px;">
+                <h4>Surendettement 2025 - Banque de France</h4>
+                <p>148 013 dossiers déposés (+9,8%)<br>Endettement total : 5 milliards € (+11,1%)</p>
+            </div>
+            
+            <div class="card">
+                <h4>Profil des surendettés :</h4>
+                <ul class="list" style="margin-top: 8px;">
+                    <li><strong>62%</strong> sous le seuil de pauvreté</li>
+                    <li><strong>44%</strong> dettes à la consommation</li>
+                    <li><strong>73,3%</strong> comportent un crédit conso</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="alert-box mt-15" style="padding: 12px;">
+        <p style="font-size: 12px;"><strong>Signal d'alarme :</strong> Confiance des ménages s'est repliée - Indicateur Insee à <strong>89</strong> (moyenne : 100). <strong>42%</strong> des foyers anticipent une dégradation de leur niveau de vie.</p>
+    </div>
+    
+    <div class="footer">
+        <span>Sources : Observatoire crédits ménages FBF 2025, Banque de France Typologie 2025, Insee Mars 2026</span>
+        <span>4</span>
+    </div>
+</div>
+
+<!-- SLIDE 5: PROJECTIONS MACRO -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">Strategic Advisory</div>
+        <h1>Projections Macroéconomiques 2026 - France</h1>
+    </div>
+    
+    <div class="grid grid-2" style="flex: 1;">
+        <div>
+            <h3 style="margin-bottom: 12px;">Prévisions OFCE et Insee</h3>
+            
+            <table class="table mb-15">
+                <thead>
+                    <tr><th>Indicateur</th><th>2024</th><th>2025</th><th>2026</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Inflation IPC</td><td>2,0%</td><td>1,0%</td><td style="color: var(--orange);">1,5%</td></tr>
+                    <tr><td>RDB réel / UC</td><td>+2,1%</td><td>+0,6%</td><td style="color: var(--red);">-0,4%</td></tr>
+                    <tr><td>Taux épargne</td><td>18,2%</td><td>18,7%</td><td>18,2%</td></tr>
+                    <tr><td>Salaire réel</td><td>+0,6%</td><td>+1,0%</td><td>+0,8%</td></tr>
+                </tbody>
+            </table>
+            
+            <div class="info-box warning">
+                <h3>Point de vigilance OFCE</h3>
+                <p style="font-size: 11px;">"2026 sera une mauvaise année pour le pouvoir d'achat" - Consolidation budgétaire restrictive + inflation énergétique = stagnation du pouvoir d'achat.</p>
+            </div>
+        </div>
+        
+        <div>
+            <h3 style="margin-bottom: 12px;">Impact Conflit Moyen-Orient</h3>
+            
+            <div class="card warning mb-12">
+                <h4 style="color: var(--orange);">Scénario Court (4-6 semaines)</h4>
+                <ul class="list mt-10">
+                    <li>Tensions prix temporaires - Pic puis normalisation</li>
+                    <li>Impact inflation +0,5 à +1 point</li>
+                    <li>Effet limité sur croissance</li>
+                </ul>
+            </div>
+            
+            <div class="card alert mb-12">
+                <h4 style="color: var(--red);">Scénario Long (6+ mois)</h4>
+                <ul class="list mt-10">
+                    <li>Prime de risque géopolitique permanente</li>
+                    <li>Inflation +2 à +3 points</li>
+                    <li>Hausse taux directeurs BCE</li>
+                    <li>Croissance -0,5 à -1%</li>
+                </ul>
+            </div>
+            
+            <div class="card blue text-center">
+                <h4 style="color: var(--blue);">Position France - PwC Mars 2026</h4>
+                <p style="font-size: 11px; margin-top: 8px;">"La France est protégée contre les pénuries électriques grâce au nucléaire, mais reste exposée aux chocs de prix énergétiques."</p>
+                <span class="tag green mt-10">Résilience structurelle</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <span>Sources : OFCE Avril 2025, Insee Décembre 2025, PwC Mars 2026, BCE Janvier 2026</span>
+        <span>5</span>
+    </div>
+</div>
+
+<!-- SLIDE 6: PLAN -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">Strategic Advisory</div>
+        <h1>Plan de la Présentation</h1>
+    </div>
+    
+    <div class="grid grid-3" style="margin-bottom: 20px;">
+        <div class="card blue text-center">
+            <div style="font-size: 28px; font-weight: bold; color: var(--blue);">01</div>
+            <h3 class="mt-10">Contexte 2026</h3>
+            <p>Géopolitique, macroéconomie, finances Français</p>
+        </div>
+        <div class="card text-center">
+            <div style="font-size: 28px; font-weight: bold; color: var(--blue);">02</div>
+            <h3 class="mt-10">Solutions Préventives</h3>
+            <p>Scoring, creditration, diversification</p>
+        </div>
+        <div class="card text-center">
+            <div style="font-size: 28px; font-weight: bold; color: var(--orange);">03</div>
+            <h3 class="mt-10">Solutions Curatives</h3>
+            <p>Détection, recouvrement, restructuration</p>
+        </div>
+        <div class="card" style="background: #f3e5f5;">
+            <div style="font-size: 28px; font-weight: bold; color: var(--purple);">04</div>
+            <h3 class="mt-10">Cadre Juridique</h3>
+            <p>Suretés, clauses, réglementation</p>
+        </div>
+        <div class="card text-center">
+            <div style="font-size: 28px; font-weight: bold; color: var(--green);">05</div>
+            <h3 class="mt-10">Leviers Technologiques</h3>
+            <p>IA, Big Data, automatisation</p>
+        </div>
+        <div class="card text-center">
+            <div style="font-size: 28px; font-weight: bold; color: var(--gold);">06</div>
+            <h3 class="mt-10">KPIs et Plan d'Action</h3>
+            <p>Tableaux de bord, roadmap</p>
+        </div>
+    </div>
+    
+    <div class="info-box text-center">
+        <h3>Objectif</h3>
+        <p style="font-size: 14px;">Réduire le coût du risque de <strong>-30 à -35%</strong> en combinant excellence opérationnelle, maîtrise juridique et innovation technologique.</p>
+    </div>
+    
+    <div class="footer">
+        <span>CONFIDENTIEL</span>
+        <span>6</span>
+    </div>
+</div>
+
+<!-- SLIDE 7: SCORING -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">Strategic Advisory</div>
+        <h1>Scoring Prédictif - Niveau de Risque Élevé</h1>
+    </div>
+    
+    <div class="grid grid-2" style="flex: 1;">
+        <div>
+            <h3 style="margin-bottom: 12px; color: var(--blue);">Variables Clés 2026</h3>
+            
+            <div class="card blue mb-15">
+                <h4>Score de Fragilité Financière</h4>
+                <div class="grid grid-2" style="gap: 15px; margin-top: 12px;">
+                    <div class="text-center">
+                        <div style="font-size: 24px; font-weight: bold; color: var(--blue);">500+</div>
+                        <div class="label">Variables analysées</div>
+                    </div>
+                    <div class="text-center">
+                        <div style="font-size: 24px; font-weight: bold; color: var(--green);">85-92%</div>
+                        <div class="label">Précision prédictive</div>
+                    </div>
+                </div>
+            </div>
+            
+            <ul class="list">
+                <li><strong>1. Historique FICP</strong> - Inscriptions, durées, montants</li>
+                <li><strong>2. Ratios d'endettement</strong> - Taux d'effort, DSC</li>
+                <li><strong>3. Stabilité revenus</strong> - CDI en priorité, secteur, ancienneté</li>
+                <li><strong>4. Comportement bancaire</strong> - Découverts, virements, épargne</li>
+                <li><strong>5. Score géopolitique</strong> - Exposition secteur au conflit</li>
+                <li><strong>6. Indicateurs macro</strong> - Zone de résidence, conjoncture locale</li>
+            </ul>
+        </div>
+        
+        <div>
+            <h3 style="margin-bottom: 12px;">Scoring Multi-Factoriel</h3>
+            
+            <div style="margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
+                    <span>Score comportemental classique</span><span>30%</span>
+                </div>
+                <div class="progress"><div class="progress-bar blue" style="width: 30%;"></div></div>
+            </div>
+            <div style="margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
+                    <span>Données alternatives (Open Banking)</span><span>25%</span>
+                </div>
+                <div class="progress"><div class="progress-bar green" style="width: 25%;"></div></div>
+            </div>
+            <div style="margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
+                    <span>Indicateurs macro sectoriels</span><span>20%</span>
+                </div>
+                <div class="progress"><div class="progress-bar orange" style="width: 20%;"></div></div>
+            </div>
+            <div style="margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
+                    <span>IA / Machine Learning</span><span>15%</span>
+                </div>
+                <div class="progress"><div class="progress-bar" style="width: 15%; background: var(--purple);"></div></div>
+            </div>
+            <div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
+                    <span>Facteurs géopolitiques</span><span>10%</span>
+                </div>
+                <div class="progress"><div class="progress-bar red" style="width: 10%;"></div></div>
+            </div>
+            
+            <div class="info-box success mt-15">
+                <p style="font-size: 12px;"><strong>Impact attendu :</strong> <span class="tag green">-30% défaillance</span> sur portefeuille avec scoring enrichi géopolitique</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <span>CONFIDENTIEL</span>
+        <span>7</span>
+    </div>
+</div>
+
+<!-- SLIDE 8: POLITIQUE CREDIT -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">Strategic Advisory</div>
+        <h1>Politique de Crédit - Mode Haute Vigilance</h1>
+    </div>
+    
+    <div class="info-box warning mb-15" style="padding: 12px;">
+        <p style="font-size: 12px;"><strong>BCE Janvier 2026 :</strong> Les banques ont <strong>durci leurs critères d'octroi</strong> pour les entreprises (net de 7%). Durcissement attendu pour Q1 2026.</p>
+    </div>
+    
+    <div class="grid grid-2" style="flex: 1;">
+        <div>
+            <h3 style="margin-bottom: 12px;">Seuils de Creditration Renforcés</h3>
+            
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--gray-100); border-radius: 8px; margin-bottom: 10px;">
+                <div style="font-size: 24px;">💰</div>
+                <div>
+                    <strong>Taux d'endettement max</strong>
+                    <div style="font-size: 20px; font-weight: bold; color: var(--red);">30%</div>
+                    <span class="tag red" style="font-size: 8px;">Rappel : 33% réglementaire</span>
+                </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--gray-100); border-radius: 8px; margin-bottom: 10px;">
+                <div style="font-size: 24px;">📉</div>
+                <div>
+                    <strong>Décote systématique garantie</strong>
+                    <div style="font-size: 20px; font-weight: bold; color: var(--red);">-20%</div>
+                    <span class="tag red" style="font-size: 8px;">vs -10% en période normale</span>
+                </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--gray-100); border-radius: 8px; margin-bottom: 10px;">
+                <div style="font-size: 24px;">🛡️</div>
+                <div>
+                    <strong>Garanties obligatoires dès</strong>
+                    <div style="font-size: 20px; font-weight: bold; color: var(--blue);">30K€</div>
+                    <span class="tag blue" style="font-size: 8px;">vs 50K€ normalement</span>
+                </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--gray-100); border-radius: 8px;">
+                <div style="font-size: 24px;">⏱️</div>
+                <div>
+                    <strong>Apport personnel minimum</strong>
+                    <div style="font-size: 20px; font-weight: bold; color: var(--blue);">15%</div>
+                    <span class="tag blue" style="font-size: 8px;">vs 10% normalement</span>
+                </div>
+            </div>
+        </div>
+        
+        <div>
+            <h3 style="margin-bottom: 12px;">Secteurs Sous Surveillance</h3>
+            
+            <div class="card alert" style="margin-bottom: 12px;">
+                <h4 style="color: var(--red);">Secteurs à Risque Élevé</h4>
+                <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;">
+                    <span class="tag red">Transport aérien</span>
+                    <span class="tag red">Tourisme</span>
+                    <span class="tag red">Acier / Chimie</span>
+                    <span class="tag red">Agro-industrie</span>
+                    <span class="tag orange">Immobilier commercial</span>
+                    <span class="tag orange">Commerce détail</span>
+                </div>
+                <p style="font-size: 10px; margin-top: 8px;">Exposition aux chocs énergétiques et crise Moyen-Orient</p>
+            </div>
+            
+            <div class="card success">
+                <h4 style="color: var(--green);">Secteurs Résilients</h4>
+                <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;">
+                    <span class="tag green">Nucléaire</span>
+                    <span class="tag green">Énergies renouvelables</span>
+                    <span class="tag green">Santé</span>
+                    <span class="tag green">Tech / IA</span>
+                    <span class="tag green">Défense</span>
+                </div>
+                <p style="font-size: 10px; margin-top: 8px;">Bénéficient du contexte géopolitique</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <span>Source : BCE Enquête Crédit Janvier 2026</span>
+        <span>8</span>
+    </div>
+</div>
+
+<!-- SLIDE 9: SECTION CURATIF -->
+<div class="slide">
+    <div class="section-num">03</div>
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+        <span style="font-size: 12px; font-weight: bold; color: var(--orange); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">Partie 3</span>
+        <h1 class="section-title">Solutions Curatives</h1>
+        <p style="font-size: 16px; color: var(--gray-600); margin-top: 15px;">Détection précoce, recouvrement, restructuration</p>
+    </div>
+    <div class="footer">
+        <span>CONFIDENTIEL</span>
+        <span>9</span>
+    </div>
+</div>
+
+<!-- SLIDE 10: DETECTION PRECOCE -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">Strategic Advisory</div>
+        <h1>Système d'Alerte Précoce - 2026</h1>
+    </div>
+    
+    <div class="grid grid-2" style="flex: 1;">
+        <div>
+            <h3 style="margin-bottom: 12px;">Signaux d'Alerte Renforcés</h3>
+            
+            <div style="padding: 10px; background: #fdedec; border-radius: 6px; border-left: 4px solid var(--red); margin-bottom: 8px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span>🔴</span>
+                    <div>
+                        <strong>Dépassement découvert > 3 jours</strong>
+                        <div style="font-size: 10px; color: var(--gray-600);">Proba de défaut +50%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="padding: 10px; background: #fdedec; border-radius: 6px; border-left: 4px solid var(--red); margin-bottom: 8px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span>🔴</span>
+                    <div>
+                        <strong>FICP inscriptions > 2/an</strong>
+                        <div style="font-size: 10px; color: var(--gray-600);">Score automatiquement dégradé</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="padding: 10px; background: #fef9e7; border-radius: 6px; border-left: 4px solid var(--orange); margin-bottom: 8px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span>🟡</span>
+                    <div>
+                        <strong>Baisse solde moyen > 25%</strong>
+                        <div style="font-size: 10px; color: var(--gray-600);">Proba de défaut +30%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="padding: 10px; background: #fef9e7; border-radius: 6px; border-left: 4px solid var(--orange);">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span>🟡</span>
+                    <div>
+                        <strong>Secteur exposé conflit</strong>
+                        <div style="font-size: 10px; color: var(--gray-600);">Alerte automatique secteur énergie</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div>
+            <h3 style="margin-bottom: 12px;">Chronologie d'Action</h3>
+            
+            <div style="position: relative; padding-left: 20px; border-left: 2px solid var(--blue);">
+                <div style="margin-bottom: 16px; position: relative;">
+                    <div style="position: absolute; left: -24px; width: 14px; height: 14px; background: var(--green); border-radius: 50%;"></div>
+                    <div><strong style="color: var(--green);">J-30</strong> - Score < 720 : Alerte automatique</div>
+                </div>
+                <div style="margin-bottom: 16px; position: relative;">
+                    <div style="position: absolute; left: -24px; width: 14px; height: 14px; background: var(--gold); border-radius: 50%;"></div>
+                    <div><strong style="color: #9a7d0a;">J-7</strong> - Relance pro-active multi-canal</div>
+                </div>
+                <div style="margin-bottom: 16px; position: relative;">
+                    <div style="position: absolute; left: -24px; width: 14px; height: 14px; background: var(--orange); border-radius: 50%;"></div>
+                    <div><strong style="color: var(--orange);">J0</strong> - 1ère échéance impayée</div>
+                </div>
+                <div style="margin-bottom: 16px; position: relative;">
+                    <div style="position: absolute; left: -24px; width: 14px; height: 14px; background: var(--red); border-radius: 50%;"></div>
+                    <div><strong style="color: var(--red);">J+15</strong> - Contact humain obligatoire</div>
+                </div>
+                <div style="position: relative;">
+                    <div style="position: absolute; left: -24px; width: 14px; height: 14px; background: var(--red); border-radius: 50%; border: 2px solid white;"></div>
+                    <div><strong style="color: var(--red);">J+30</strong> - Escalade recouvrement / Juridique</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="info-box mt-15" style="padding: 12px;">
+        <p style="font-size: 11px;"><strong>Nouveauté 2026 :</strong> Intégration des <strong>indicateurs macro temps réel</strong> (prix énergie, indices secteurs) dans les modèles d'alerte pour anticiper les difficultés.</p>
+    </div>
+    
+    <div class="footer">
+        <span>CONFIDENTIEL</span>
+        <span>10</span>
+    </div>
+</div>
+
+<!-- SLIDE 11: RECOUVREMENT -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">Strategic Advisory</div>
+        <h1>Stratégie de Recouvrement par Niveau</h1>
+    </div>
+    
+    <div class="grid grid-4" style="gap: 15px; margin-bottom: 15px;">
+        <div class="card text-center" style="border-top: 4px solid var(--green);">
+            <div style="font-size: 18px; font-weight: bold; color: var(--green);">NIVEAU 1</div>
+            <h3 class="mt-10" style="font-size: 13px;">Amiable</h3>
+            <div class="label">J1 - J30</div>
+            <ul class="list mt-10" style="font-size: 10px;">
+                <li>SMS automatisés</li>
+                <li>Emails relance</li>
+                <li>IA chatbot</li>
+            </ul>
+            <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--gray-200);">
+                <div style="font-size: 16px; font-weight: bold; color: var(--green);">60-70%</div>
+                <div class="label">Taux succès</div>
+            </div>
+        </div>
+        
+        <div class="card text-center" style="border-top: 4px solid var(--blue);">
+            <div style="font-size: 18px; font-weight: bold; color: var(--blue);">NIVEAU 2</div>
+            <h3 class="mt-10" style="font-size: 13px;">Négociation</h3>
+            <div class="label">J30 - J90</div>
+            <ul class="list mt-10" style="font-size: 10px;">
+                <li>Réaménagements</li>
+                <li>Reports échéances</li>
+                <li>Réduction taux</li>
+            </ul>
+            <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--gray-200);">
+                <div style="font-size: 16px; font-weight: bold; color: var(--blue);">20-30%</div>
+                <div class="label">Taux succès</div>
+            </div>
+        </div>
+        
+        <div class="card text-center" style="border-top: 4px solid var(--orange);">
+            <div style="font-size: 18px; font-weight: bold; color: var(--orange);">NIVEAU 3</div>
+            <h3 class="mt-10" style="font-size: 13px;">Forcé</h3>
+            <div class="label">J90 - J180</div>
+            <ul class="list mt-10" style="font-size: 10px;">
+                <li>Huissier</li>
+                <li>Procédures judiciaires</li>
+                <li>Saisie</li>
+            </ul>
+            <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--gray-200);">
+                <div style="font-size: 16px; font-weight: bold; color: var(--orange);">10-15%</div>
+                <div class="label">Taux succès</div>
+            </div>
+        </div>
+        
+        <div class="card text-center" style="border-top: 4px solid var(--red);">
+            <div style="font-size: 18px; font-weight: bold; color: var(--red);">NIVEAU 4</div>
+            <h3 class="mt-10" style="font-size: 13px;">Provision</h3>
+            <div class="label">J180+</div>
+            <ul class="list mt-10" style="font-size: 10px;">
+                <li>Radiation</li>
+                <li>Cession créance</li>
+                <li>Provisionnement</li>
+            </ul>
+            <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--gray-200);">
+                <div style="font-size: 16px; font-weight: bold; color: var(--red);">0-5%</div>
+                <div class="label">Taux succès</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="info-box warning" style="padding: 12px; display: flex; justify-content: space-around; text-align: center;">
+        <div>
+            <div style="font-size: 18px; font-weight: bold;">€€€</div>
+            <div style="font-size: 9px;">COÛT</div>
+        </div>
+        <div style="font-size: 20px; color: var(--gold);">→</div>
+        <div>
+            <div style="font-size: 18px; font-weight: bold;">⚖️</div>
+            <div style="font-size: 9px;">JURIDIQUE</div>
+        </div>
+        <div style="font-size: 20px; color: var(--gold);">→</div>
+        <div>
+            <div style="font-size: 18px; font-weight: bold;">📉</div>
+            <div style="font-size: 9px;">SUCCÈS</div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <span>CONFIDENTIEL</span>
+        <span>11</span>
+    </div>
+</div>
+
+<!-- SLIDE 12: CADRE JURIDIQUE -->
+<div class="slide">
+    <div class="section-num" style="color: var(--purple);">04</div>
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+        <span style="font-size: 12px; font-weight: bold; color: var(--purple); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">Partie 4</span>
+        <h1 class="section-title" style="color: var(--purple);">Cadre Juridique et Réglementaire</h1>
+        <p style="font-size: 16px; color: var(--gray-600); margin-top: 15px;">Suretés, clauses, Bâle III/IV, IFRS 9</p>
+    </div>
+    <div class="footer">
+        <span>CONFIDENTIEL</span>
+        <span>12</span>
+    </div>
+</div>
+
+<!-- SLIDE 13: SURETES -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">Strategic Advisory</div>
+        <h1>Suretés et Garanties - Armes Juridiques</h1>
+    </div>
+    
+    <div class="grid grid-2" style="flex: 1;">
+        <div>
+            <h3 style="margin-bottom: 12px; color: var(--purple);">Hiérarchie des Suretés</h3>
+            
+            <div class="card" style="margin-bottom: 10px; border-left: 4px solid var(--purple);">
+                <h4>Hypothèque (Art. 2392-2400 Code civil)</h4>
+                <p>Immobilier - Rang 1 prêteur de deniers - Force probante maximale</p>
+            </div>
+            
+            <div class="card" style="margin-bottom: 10px; border-left: 4px solid var(--purple);">
+                <h4>Nantissement (Art. 2337-2345 Code civil)</h4>
+                <p>Valeurs mobilières, fonds de commerce, créances - RCC</p>
+            </div>
+            
+            <div class="card" style="margin-bottom: 10px; border-left: 4px solid var(--gold); background: #fef9e7;">
+                <h4 style="color: #9a7d0a;">Cautionnement</h4>
+                <p>Personne physique/morale - Capacité juridique vérifiée</p>
+            </div>
+            
+            <div class="card" style="border-left: 4px solid var(--green);">
+                <h4 style="color: var(--green);">Privilège de prêteur de deniers</h4>
+                <p>Priorité absolue sur hypothèque pour achats immobiliers</p>
+            </div>
+        </div>
+        
+        <div>
+            <h3 style="margin-bottom: 12px; color: var(--purple);">Leviers Contractuels 2026</h3>
+            
+            <div class="card" style="margin-bottom: 10px; border-left: 4px solid var(--purple);">
+                <h4>Clause déchéance du terme (Art. 1231-5)</h4>
+                <p>Exigibilité immédiate en cas de non-paiement</p>
+            </div>
+            
+            <div class="card" style="margin-bottom: 10px; border-left: 4px solid var(--purple);">
+                <h4>Clause de solidarité active</h4>
+                <p>Action contre un seul codébiteur pour totalité dette</p>
+            </div>
+            
+            <div class="card" style="margin-bottom: 10px; border-left: 4px solid var(--gold); background: #fef9e7;">
+                <h4 style="color: #9a7d0a;">Clause de domiciliation (Art. L313-12)</h4>
+                <p>Obligation de domicilier les revenus</p>
+            </div>
+            
+            <div class="card" style="border-left: 4px solid var(--gold); background: #fef9e7;">
+                <h4 style="color: #9a7d0a;">Assurance emprunteur (Art. L311-37)</h4>
+                <p>Décès, invalidité, perte emploi - 12 mois substitution</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="info-box mt-15" style="padding: 12px;">
+        <p style="font-size: 11px;"><strong>Best Practice :</strong> Combiner <strong>hypothèque + caution + assurance</strong> pour maximiser la récupération.</p>
+    </div>
+    
+    <div class="footer">
+        <span>CONFIDENTIEL</span>
+        <span>13</span>
+    </div>
+</div>
+
+<!-- SLIDE 14: BALE III IFRS9 -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">Strategic Advisory</div>
+        <h1>Bâle III/IV et Provisionnement IFRS 9</h1>
+    </div>
+    
+    <div class="grid grid-2" style="flex: 1;">
+        <div>
+            <h3 style="margin-bottom: 12px; color: var(--purple);">Ratios Prudentiels Bâle III 2026</h3>
+            
+            <table class="table mb-15">
+                <thead>
+                    <tr><th>Ratio</th><th>Minimum</th><th>Banque FR</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Common Equity Tier 1</td><td style="color: var(--red);">4,5%</td><td style="color: var(--green);">16,1%</td></tr>
+                    <tr><td>Tier 1</td><td style="color: var(--red);">6%</td><td style="color: var(--green);">~18%</td></tr>
+                    <tr><td>Ratio de levier</td><td style="color: var(--red);">3%</td><td style="color: var(--green);">5,9%</td></tr>
+                    <tr><td>LCR (Liquidité)</td><td style="color: var(--orange);">100%</td><td style="color: var(--green);">134%</td></tr>
+                </tbody>
+            </table>
+            
+            <div class="info-box warning" style="padding: 12px;">
+                <p style="font-size: 11px;"><strong>BCE 2026 :</strong> RWA en hausse suite aux nouvelles mesures réglementaires. Effet de durcissement net sur critères d'octroi.</p>
+            </div>
+        </div>
+        
+        <div>
+            <h3 style="margin-bottom: 12px; color: var(--purple);">Provisionnement IFRS 9 - ECL</h3>
+            
+            <div class="card success mb-10">
+                <h4>Stage 1 : 12 mois ECL</h4>
+                <p>Créances saines - Provision attendue 12 mois</p>
+            </div>
+            
+            <div class="card warning mb-10">
+                <h4>Stage 2 : ECL Lifetime</h4>
+                <p>Dégradation risque - Transfert si PD x 2</p>
+            </div>
+            
+            <div class="card alert">
+                <h4>Stage 3 : Dépréciées</h4>
+                <p>Défaut - Provision = valeur actuelle flux</p>
+            </div>
+            
+            <div class="info-box mt-10" style="padding: 10px;">
+                <p style="font-size: 10px;"><strong>Levier IFRS 9 :</strong> Anticiper le passage Stage 2/3 = provision progressive = impact lissé sur P&L.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <span>BCE Gouvernance Décembre 2025, IFRS 9</span>
+        <span>14</span>
+    </div>
+</div>
+
+<!-- SLIDE 15: SURENDETTEMENT -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">Strategic Advisory</div>
+        <h1>Surendettement - Cadre L.711-1 CSS</h1>
+    </div>
+    
+    <div class="grid grid-2" style="flex: 1;">
+        <div>
+            <h3 style="margin-bottom: 12px; color: var(--red);">Procédure et Statistiques 2025</h3>
+            
+            <div class="grid grid-2" style="gap: 12px; margin-bottom: 15px;">
+                <div class="stat-box" style="background: #fdedec;">
+                    <div class="value" style="color: var(--red); font-size: 22px;">148 013</div>
+                    <div class="label">Dossiers déposés 2025</div>
+                    <span class="tag red">+9,8% vs 2024</span>
+                </div>
+                <div class="stat-box" style="background: #fdedec;">
+                    <div class="value" style="color: var(--red); font-size: 22px;">5 Mds€</div>
+                    <div class="label">Endettement total</div>
+                    <span class="tag red">+11,1%</span>
+                </div>
+            </div>
+            
+            <div class="card alert" style="margin-bottom: 10px;">
+                <h4>Évolution procédure</h4>
+                <p>Dépôt → Suspension poursuites (2 mois) → Mesures/Plan → Exécution ou effacement</p>
+            </div>
+            
+            <div class="card">
+                <h4>Point clé 2025</h4>
+                <p>Plus de la moitié des dossiers clos ont bénéficié d'un <strong>effacement total ou partiel</strong></p>
+            </div>
+        </div>
+        
+        <div>
+            <h3 style="margin-bottom: 12px; color: var(--purple);">Leviers pour la Banque</h3>
+            
+            <div class="card">
+                <h4>Actions Possibles</h4>
+                <ul class="list mt-10">
+                    <li>Contester éligibilité devant commission</li>
+                    <li>Faire valoir créances hypothécaires privilégiées</li>
+                    <li>Négocier adossement au plan</li>
+                    <li>Demander révocation plan inexécution</li>
+                    <li>Maintenir suretés effectives</li>
+                </ul>
+            </div>
+            
+            <div class="info-box mt-15" style="padding: 12px;">
+                <h4>Hiérarchie des Créances</h4>
+                <p style="font-size: 11px;">Trésorerie > Salaires > Frais justice > Privilèges > <strong>Banque</strong></p>
+                <p style="font-size: 10px; margin-top: 6px; opacity: 0.8;">Les créances garanties (hypothèques) sont mieux traitées</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <span>Code de la consommation Art. L711-1, Banque de France Typologie 2025</span>
+        <span>15</span>
+    </div>
+</div>
+
+<!-- SLIDE 16: SECTION TECHNOLOGIE -->
+<div class="slide">
+    <div class="section-num" style="color: var(--green);">05</div>
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+        <span style="font-size: 12px; font-weight: bold; color: var(--green); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">Partie 5</span>
+        <h1 class="section-title" style="color: var(--green);">Leviers Technologiques</h1>
+        <p style="font-size: 16px; color: var(--gray-600); margin-top: 15px;">IA, Big Data, Automatisation</p>
+    </div>
+    <div class="footer">
+        <span>CONFIDENTIEL</span>
+        <span>16</span>
+    </div>
+</div>
+
+<!-- SLIDE 17: IA -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">Strategic Advisory</div>
+        <h1>Intelligence Artificielle et Automatisation 2026</h1>
+    </div>
+    
+    <div class="grid grid-3 mb-15">
+        <div class="card dark text-center">
+            <div style="font-size: 36px; margin-bottom: 10px;">🔮</div>
+            <h3 style="color: white;">Prédiction de Défaut</h3>
+            <ul class="list mt-10" style="color: rgba(255,255,255,0.8); font-size: 10px;">
+                <li>XGBoost / Random Forest</li>
+                <li>Deep Learning</li>
+                <li>500+ variables</li>
+                <li>Précision 85-92%</li>
+            </ul>
+            <span class="tag green mt-10">ROI 3-5x</span>
+        </div>
+        
+        <div class="card blue text-center">
+            <div style="font-size: 36px; margin-bottom: 10px;">📊</div>
+            <h3>Surveillance Temps Réel</h3>
+            <ul class="list mt-10" style="font-size: 10px;">
+                <li>Alertes automatisées</li>
+                <li>Scoring dynamique</li>
+                <li>Données macro intégrées</li>
+                <li>Détection anomalies</li>
+            </ul>
+            <span class="tag blue mt-10">-40% impayés</span>
+        </div>
+        
+        <div class="card text-center">
+            <div style="font-size: 36px; margin-bottom: 10px;">⚡</div>
+            <h3>Automatisation</h3>
+            <ul class="list mt-10" style="font-size: 10px;">
+                <li>RPA processus répétitifs</li>
+                <li>Décision crédit auto</li>
+                <li>Provisionnement IFRS 9</li>
+                <li>Legal Tech</li>
+            </ul>
+            <span class="tag green mt-10">-60% coûts</span>
+        </div>
+    </div>
+    
+    <div class="info-box">
+        <h3 style="margin-bottom: 12px;">Gains Attendus 2026</h3>
+        <div class="grid grid-4">
+            <div class="text-center">
+                <div style="font-size: 24px; font-weight: bold; color: var(--green);">-35%</div>
+                <div class="label">Coût du risque</div>
+            </div>
+            <div class="text-center">
+                <div style="font-size: 24px; font-weight: bold; color: var(--green);">+50%</div>
+                <div class="label">Décisions instant.</div>
+            </div>
+            <div class="text-center">
+                <div style="font-size: 24px; font-weight: bold; color: var(--green);">-70%</div>
+                <div class="label">Délai instruction</div>
+            </div>
+            <div class="text-center">
+                <div style="font-size: 24px; font-weight: bold; color: var(--green);">24/7</div>
+                <div class="label">Disponibilité</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <span>CONFIDENTIEL</span>
+        <span>17</span>
+    </div>
+</div>
+
+<!-- SLIDE 18: OPEN BANKING -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">Strategic Advisory</div>
+        <h1>Open Banking et Données Alternatives - PSD2</h1>
+    </div>
+    
+    <div class="grid grid-2" style="flex: 1;">
+        <div>
+            <h3 style="margin-bottom: 12px;">Sources de Données 2026</h3>
+            
+            <div class="grid grid-2" style="gap: 10px; margin-bottom: 15px;">
+                <div class="card text-center" style="padding: 15px;">
+                    <div style="font-size: 24px; margin-bottom: 8px;">🏠</div>
+                    <strong>loo2p</strong>
+                    <p style="font-size: 10px;">Loyer, charges</p>
+                </div>
+                <div class="card text-center" style="padding: 15px;">
+                    <div style="font-size: 24px; margin-bottom: 8px;">⚡</div>
+                    <strong>Utilities</strong>
+                    <p style="font-size: 10px;">Énergie, eau</p>
+                </div>
+                <div class="card text-center" style="padding: 15px;">
+                    <div style="font-size: 24px; margin-bottom: 8px;">📱</div>
+                    <strong>Comportement</strong>
+                    <p style="font-size: 10px;">App usage, navigation</p>
+                </div>
+                <div class="card text-center" style="padding: 15px;">
+                    <div style="font-size: 24px; margin-bottom: 8px;">📈</div>
+                    <strong>Sectorielles</strong>
+                    <p style="font-size: 10px;">Indices, conjoncture</p>
+                </div>
+            </div>
+            
+            <div class="card" style="border-left: 4px solid var(--purple);">
+                <h4>PSD2 - Accès aux comptes (Art. 36)</h4>
+                <p>Droit d'accès aux données par le client (ou tiers)</p>
+            </div>
+        </div>
+        
+        <div>
+            <h3 style="margin-bottom: 12px;">Cadre RGPD - Art. 6</h3>
+            
+            <div class="card success mb-10" style="border-left: 4px solid var(--green);">
+                <h4>Art. 6.1(b) - Exécution du contrat</h4>
+                <p>Traitement nécessaire à l'exécution du contrat de prêt</p>
+            </div>
+            
+            <div class="card mb-10" style="border-left: 4px solid var(--purple);">
+                <h4>Art. 6.1(c) - Obligation légale</h4>
+                <p>FICP, FATCA, LCB-FT, déclarations suspicions</p>
+            </div>
+            
+            <div class="card mb-10" style="border-left: 4px solid var(--purple);">
+                <h4>Art. 6.1(f) - Intérêt légitime</h4>
+                <p>Prévention fraude, scoring, gestion risque</p>
+            </div>
+            
+            <div class="info-box success mt-10" style="padding: 10px;">
+                <p style="font-size: 10px;"><strong>Bénéfices :</strong> Meilleure connaissance client, détection multi-exposition, réduction -25% risque sélection adverse.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <span>Directive PSD2 2015/2366, RGPD 2016/679</span>
+        <span>18</span>
+    </div>
+</div>
+
+<!-- SLIDE 19: KPIs -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">Strategic Advisory</div>
+        <h1>Indicateurs Clés de Performance 2026</h1>
+    </div>
+    
+    <div class="grid grid-4 mb-15">
+        <div class="stat-box">
+            <div class="label">Coût du risque</div>
+            <div class="value" style="color: var(--orange); font-size: 20px;">0,8%</div>
+            <div class="label">Objectif : < 0,5%</div>
+            <div class="progress mt-10"><div class="progress-bar orange" style="width: 80%;"></div></div>
+        </div>
+        <div class="stat-box">
+            <div class="label">Ratio NPL</div>
+            <div class="value" style="color: var(--red); font-size: 20px;">4,2%</div>
+            <div class="label">Objectif : < 3%</div>
+            <div class="progress mt-10"><div class="progress-bar red" style="width: 70%;"></div></div>
+        </div>
+        <div class="stat-box">
+            <div class="label">Taux couverture</div>
+            <div class="value" style="color: var(--green); font-size: 20px;">72%</div>
+            <div class="label">Objectif : > 80%</div>
+            <div class="progress mt-10"><div class="progress-bar green" style="width: 90%;"></div></div>
+        </div>
+        <div class="stat-box">
+            <div class="label">Délai récup.</div>
+            <div class="value" style="color: var(--blue); font-size: 20px;">65j</div>
+            <div class="label">Objectif : < 45j</div>
+            <div class="progress mt-10"><div class="progress-bar blue" style="width: 65%;"></div></div>
+        </div>
+    </div>
+    
+    <div class="grid grid-2" style="flex: 1;">
+        <div>
+            <h3 style="margin-bottom: 10px;">Catégories d'Indicateurs</h3>
+            <div class="card">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                    <div style="width: 30px; height: 30px; background: var(--blue); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px;">📈</div>
+                    <div><strong>Volume</strong><p class="label">Encours, dossiers</p></div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                    <div style="width: 30px; height: 30px; background: var(--red); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px;">⚠️</div>
+                    <div><strong>Risque</strong><p class="label">NPL, défaillance</p></div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 30px; height: 30px; background: var(--purple); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px;">⚖️</div>
+                    <div><strong>Juridique</strong><p class="label">Contentieux, récup.</p></div>
+                </div>
+            </div>
+        </div>
+        
+        <div>
+            <h3 style="margin-bottom: 10px;">Matrice de Pilotage</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--gray-200); border-radius: 8px; overflow: hidden;">
+                <div style="background: #d1f2eb; padding: 12px; text-align: center;">
+                    <h4 style="color: #1e8449; font-size: 11px;">Excellence</h4>
+                    <p class="label">Au-delà objectifs</p>
+                </div>
+                <div style="background: #fdebd0; padding: 12px; text-align: center;">
+                    <h4 style="color: #b9770e; font-size: 11px;">Attention</h4>
+                    <p class="label">Proche objectifs</p>
+                </div>
+                <div style="background: #fdebd0; padding: 12px; text-align: center;">
+                    <h4 style="color: #b9770e; font-size: 11px;">Vigilance</h4>
+                    <p class="label">Sous objectif</p>
+                </div>
+                <div style="background: #fadbd8; padding: 12px; text-align: center;">
+                    <h4 style="color: #b03a2e; font-size: 11px;">Critique</h4>
+                    <p class="label">Action immédiate</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <span>CONFIDENTIEL</span>
+        <span>19</span>
+    </div>
+</div>
+
+<!-- SLIDE 20: ROADMAP -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">Strategic Advisory</div>
+        <h1>Roadmap de Transformation - 24 Mois</h1>
+    </div>
+    
+    <div class="grid grid-3" style="gap: 20px; margin-bottom: 20px;">
+        <div class="card">
+            <div style="width: 40px; height: 40px; background: var(--blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-bottom: 12px;">PHASE 1</div>
+            <h4 style="color: var(--blue);">Fondations (0-6 m)</h4>
+            <ul class="list mt-10">
+                <li>Audit portefeuille</li>
+                <li>Refonte scoring IA</li>
+                <li>Revue suretés</li>
+                <li>Formation équipes</li>
+                <li>Dashboard MVP</li>
+            </ul>
+            <span class="tag blue mt-10">Juridique : Audit</span>
+        </div>
+        
+        <div class="card">
+            <div style="width: 40px; height: 40px; background: var(--orange); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-bottom: 12px;">PHASE 2</div>
+            <h4 style="color: var(--orange);">Accélération (6-12 m)</h4>
+            <ul class="list mt-10">
+                <li>Déploiement IA/ML</li>
+                <li>IFRS 9 automatisé</li>
+                <li>Open Banking</li>
+                <li>Bâle IV compliance</li>
+                <li>Legal Tech</li>
+            </ul>
+            <span class="tag purple mt-10">Juridique : Clauses</span>
+        </div>
+        
+        <div class="card">
+            <div style="width: 40px; height: 40px; background: var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-bottom: 12px;">PHASE 3</div>
+            <h4 style="color: var(--green);">Excellence (12-24 m)</h4>
+            <ul class="list mt-10">
+                <li>Optimisation continue</li>
+                <li>Benchmarking</li>
+                <li>Full automatisation</li>
+                <li>Excellence ops</li>
+            </ul>
+            <span class="tag green mt-10">Juridique : Auto</span>
+        </div>
+    </div>
+    
+    <div class="grid grid-3 mb-15">
+        <div class="stat-box">
+            <div class="value" style="color: var(--blue);">€€€€</div>
+            <div class="label">Investissement total</div>
+        </div>
+        <div class="stat-box">
+            <div class="value" style="color: var(--green);">18 mois</div>
+            <div class="label">Délai ROI</div>
+        </div>
+        <div class="stat-box">
+            <div class="value" style="color: var(--orange);">4x</div>
+            <div class="label">ROI attendu 3 ans</div>
+        </div>
+    </div>
+    
+    <div class="info-box warning" style="padding: 12px;">
+        <p style="font-size: 11px;"><strong>Contexte 2026 :</strong> Ajuster la roadmap selon l'évolution géopolitique. Priorité aux secteurs résilients (nucléaire, santé, tech) vs secteurs exposés (transport, tourisme, acier).</p>
+    </div>
+    
+    <div class="footer">
+        <span>CONFIDENTIEL</span>
+        <span>20</span>
+    </div>
+</div>
+
+<!-- SLIDE 21: SYNTHESE -->
+<div class="slide">
+    <div class="header">
+        <div class="logo">Strategic Advisory</div>
+        <h1>Synthèse - Leviers Juridiques et Impact</h1>
+    </div>
+    
+    <table class="table mb-15">
+        <thead>
+            <tr><th>Levier</th><th>Référence</th><th>Impact</th><th>Difficulté</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Suretés et Garanties</strong></td><td><span class="tag purple">Art. 2337-2400 C.civ</span></td><td style="color: var(--green);">★★★</td><td><span class="tag orange">Moyenne</span></td></tr>
+            <tr><td><strong>Clauses contractuelles</strong></td><td><span class="tag purple">Art. 1231-5 C.civ</span></td><td style="color: var(--green);">★★★</td><td><span class="tag green">Faible</span></td></tr>
+            <tr><td><strong>IFRS 9 anticipé</strong></td><td><span class="tag orange">IFRS 9</span></td><td style="color: var(--blue);">★★</td><td><span class="tag orange">Moyenne</span></td></tr>
+            <tr><td><strong>Bâle III/IV</strong></td><td><span class="tag orange">CRR 575/2013</span></td><td style="color: var(--green);">★★★</td><td><span class="tag red">Élevée</span></td></tr>
+            <tr><td><strong>Scoring géopolitique</strong></td><td><span class="tag green">Nouveauté 2026</span></td><td style="color: var(--green);">★★★</td><td><span class="tag orange">Moyenne</span></td></tr>
+            <tr><td><strong>IA et Automatisation</strong></td><td><span class="tag green">ROI 3-5x</span></td><td style="color: var(--green);">★★★</td><td><span class="tag orange">Moyenne</span></td></tr>
+        </tbody>
+    </table>
+    
+    <div class="info-box">
+        <p style="font-size: 13px;"><strong>Recommandation :</strong> Combiner <strong>sureiés renforcées + scoring enrichi géopolitique + IA</strong> pour une protection optimale.</p>
+    </div>
+    
+    <div class="footer">
+        <span>CONFIDENTIEL</span>
+        <span>21</span>
+    </div>
+</div>
+
+<!-- SLIDE 22: CONCLUSION -->
+<div class="slide cover">
+    <div class="logo-text">Strategic Advisory - Avril 2026</div>
+    <div class="bar"></div>
+    <h1 style="font-size: 36px;">Conclusion</h1>
+    <p class="subtitle" style="max-width: 800px; margin-top: 20px;">
+        Dans un contexte géopolitique sans précédent,<br>
+        la réduction du coût du risque repose sur un triptyque :<br>
+        <strong style="color: var(--gold);">Excellence Opérationnelle + Maîtrise Juridique + Innovation Technologique</strong>
+    </p>
+    
+    <div class="grid grid-3" style="max-width: 800px; margin-top: 30px; gap: 15px;">
+        <div style="text-align: center; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+            <div style="font-size: 28px; font-weight: bold; color: var(--orange);">-35%</div>
+            <div style="font-size: 11px; color: rgba(255,255,255,0.8);">Coût du risque cible</div>
+        </div>
+        <div style="text-align: center; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+            <div style="font-size: 28px; font-weight: bold; color: var(--gold);">⚖️</div>
+            <div style="font-size: 11px; color: rgba(255,255,255,0.8);">Cadre juridique optimisé</div>
+        </div>
+        <div style="text-align: center; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+            <div style="font-size: 28px; font-weight: bold; color: var(--green);">4x ROI</div>
+            <div style="font-size: 11px; color: rgba(255,255,255,0.8);">Retour sur investissement</div>
+        </div>
+    </div>
+    
+    <p style="margin-top: 40px; font-size: 16px;">Merci de votre attention</p>
+    <p class="meta">strategic.advisory@example.com | Avril 2026</p>
+</div>
+
+<!-- BOUTON IMPRESSION -->
+<button class="print-btn" onclick="window.print()">📥 Télécharger en PDF</button>
+
+</body>
+</html>
